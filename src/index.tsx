@@ -31,6 +31,7 @@ Amplify.configure({
   }
 });
 
+console.log(`Starting application`);
 ReactDOM.render(
   <React.StrictMode>
     <Router>
