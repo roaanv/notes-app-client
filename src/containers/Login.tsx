@@ -6,6 +6,7 @@ import {RouteComponentProps } from "react-router-dom";
 
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
+import {useFormFields} from "../libs/hooksLibs";
 
 // TODO: Need to change the "any" types to strong types
 interface LoginProps extends RouteComponentProps {
@@ -13,13 +14,14 @@ interface LoginProps extends RouteComponentProps {
 }
 
 const Login: React.FC<LoginProps> = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fields, handleFieldChange] = useFormFields({
+    email: "",
+    password: ""
+  });
 
   function validateForm() {
-    console.log(`Calling validateForm: ${email}`);
-    return email.length > 0 && password.length > 0;
+    return fields.email.length > 0 && fields.password.length > 0;
   }
 
   async function handleSubmit(event:any) {
@@ -27,7 +29,7 @@ const Login: React.FC<LoginProps> = (props) => {
     setIsLoading(true);
 
     try {
-      await Auth.signIn(email, password);
+      await Auth.signIn(fields.email, fields.password);
       props.userHasAuthenticated(true);
       // Redirect to home screen after login
       props.history.push("/");
@@ -44,15 +46,15 @@ const Login: React.FC<LoginProps> = (props) => {
           <FormControl
             autoFocus
             type="email"
-            value={email}
-            onChange={(e:any) => setEmail(e.target.value)}
+            value={fields.email}
+            onChange={handleFieldChange}
           />
         </FormGroup>
         <FormGroup controlId="password">
           <FormLabel>Password</FormLabel>
           <FormControl
-            value={password}
-            onChange={(e:any) => setPassword(e.target.value)}
+            value={fields.password}
+            onChange={handleFieldChange}
             type="password"
           />
         </FormGroup>
