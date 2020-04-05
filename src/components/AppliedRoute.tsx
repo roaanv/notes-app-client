@@ -1,6 +1,5 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import {RouteComponentProps} from "react-router";
 
 function AppliedRoute({ component: C, appProps, ...rest }:any) {
   return (

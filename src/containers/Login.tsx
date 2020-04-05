@@ -9,7 +9,7 @@ interface LoginProps {
   userHasAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
 
-function Login(props:LoginProps) {
+const Login: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -55,6 +55,6 @@ function Login(props:LoginProps) {
       </form>
     </div>
   );
-}
+};
 
 export default Login;
