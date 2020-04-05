@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useState} from "react";
+import React, {Dispatch, FormEvent, SetStateAction, useState} from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 import {RouteComponentProps } from "react-router-dom";
@@ -24,7 +24,7 @@ const Login: React.FC<LoginProps> = (props) => {
     return fields.email.length > 0 && fields.password.length > 0;
   }
 
-  async function handleSubmit(event:any) {
+  async function handleSubmit(event:FormEvent) {
     event.preventDefault();
     setIsLoading(true);
 
