@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Link } from "react-router-dom";
+import { withRouter, Link, RouteComponentProps } from "react-router-dom";
 import {Nav, Navbar} from "react-bootstrap";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
@@ -8,7 +8,7 @@ import { Auth } from "aws-amplify";
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
 import "./App.css";
 
-const App: React.FC = () => {
+const App: React.FC<RouteComponentProps> = (props) => {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   // deps is an empty list, then it will only fire the
@@ -33,6 +33,9 @@ const App: React.FC = () => {
   async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
+
+    // Redirect to login page after logout
+    props.history.push("/login");
   }
 
   return (
@@ -69,4 +72,7 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+// App is not renders (wrapped) via the Route component
+// But we still want access to the history
+export default withRouter(App);
+

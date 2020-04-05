@@ -1,17 +1,21 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import { Auth } from "aws-amplify";
+import {RouteComponentProps } from "react-router-dom";
+
 
 import "./Login.css";
+import LoaderButton from "../components/LoaderButton";
 
 // TODO: Need to change the "any" types to strong types
-interface LoginProps {
+interface LoginProps extends RouteComponentProps {
   userHasAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
 
 const Login: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
     console.log(`Calling validateForm: ${email}`);
@@ -20,10 +24,13 @@ const Login: React.FC<LoginProps> = (props) => {
 
   async function handleSubmit(event:any) {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       await Auth.signIn(email, password);
       props.userHasAuthenticated(true);
+      // Redirect to home screen after login
+      props.history.push("/");
     } catch (e) {
       alert(e.message);
     }
@@ -49,9 +56,15 @@ const Login: React.FC<LoginProps> = (props) => {
             type="password"
           />
         </FormGroup>
-        <Button size="lg" block disabled={!validateForm()} type="submit">
+        <LoaderButton
+          block
+          type="submit"
+          size="lg"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
           Login
-        </Button>
+        </LoaderButton>
       </form>
     </div>
   );
