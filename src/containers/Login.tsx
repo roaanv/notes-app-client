@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Auth } from "aws-amplify";
+
 import "./Login.css";
 
 // TODO: Need to change the "any" types to strong types
 interface LoginProps {
-
+  userHasAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
 
 function Login(props:LoginProps) {
@@ -16,8 +18,15 @@ function Login(props:LoginProps) {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event:any) {
+  async function handleSubmit(event:any) {
     event.preventDefault();
+
+    try {
+      await Auth.signIn(email, password);
+      props.userHasAuthenticated(true);
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   return (
