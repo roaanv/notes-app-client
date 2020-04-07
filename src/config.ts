@@ -1,4 +1,5 @@
 export default {
+  MAX_ATTACHMENT_SIZE: 5000000,
   s3: {
     REGION: "ap-southeast-2",
     BUCKET: "notes-app-api-dev-attachmentsbucket-1ss1mj4e4d6ro"

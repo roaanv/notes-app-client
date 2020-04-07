@@ -5,6 +5,7 @@ import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import AppliedRoute from "./components/AppliedRoute";
 import Signup from "./containers/Signup";
+import NewNote from "./containers/NewNote";
 
 function Routes({appProps}:any) {
   return (
@@ -12,6 +13,8 @@ function Routes({appProps}:any) {
       <AppliedRoute path="/" exact component={Home} appProps={appProps}/>
       <AppliedRoute path="/login" exact component={Login} appProps={appProps}/>
       <AppliedRoute path="/signup" exact component={Signup} appProps={appProps} />
+      <AppliedRoute path="/notes/new" exact component={NewNote} appProps={appProps} />
+
       <Route component={NotFound} />
     </Switch>
   );
