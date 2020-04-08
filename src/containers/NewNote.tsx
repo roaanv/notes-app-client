@@ -7,6 +7,7 @@ import {RouteComponentProps} from "react-router-dom";
 import bsCustomFileInput from 'bs-custom-file-input'
 import { API } from "aws-amplify";
 import {Note} from "../models/Note";
+import {s3Upload} from "../libs/awsLib";
 
 interface NewNoteProps extends RouteComponentProps {
 }
@@ -43,7 +44,11 @@ const NewNote:React.FC<NewNoteProps> = (props) => {
     setIsLoading(true);
 
     try {
-      await createNote({ content });
+      const attachment = file.current
+        ? await s3Upload(file.current)
+        : null;
+
+      await createNote({ content, attachment });
       props.history.push("/");
     } catch (e) {
       alert(e);
