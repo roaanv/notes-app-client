@@ -5,6 +5,8 @@ import config from "../config";
 import "./NewNote.css";
 import {RouteComponentProps} from "react-router-dom";
 import bsCustomFileInput from 'bs-custom-file-input'
+import { API } from "aws-amplify";
+import {Note} from "../models/Note";
 
 interface NewNoteProps extends RouteComponentProps {
 }
@@ -39,6 +41,21 @@ const NewNote:React.FC<NewNoteProps> = (props) => {
     }
 
     setIsLoading(true);
+
+    try {
+      await createNote({ content });
+      props.history.push("/");
+    } catch (e) {
+      alert(e);
+      setIsLoading(false);
+    }
+  }
+
+  function createNote(note:Note) {
+    // As per amplify configuration in index.tsx
+    return API.post("notes", "/notes", {
+      body: note
+    });
   }
 
   return (
