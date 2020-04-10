@@ -9,3 +9,7 @@ export async function s3Upload(file:File): Promise<string> {
 
   return (stored as any).key;
 }
+
+export async function s3Delete(key: string): Promise<void> {
+  await Storage.vault.remove(key);
+}

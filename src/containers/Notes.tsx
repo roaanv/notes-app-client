@@ -6,7 +6,7 @@ import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import config from "../config";
 import LoaderButton from "../components/LoaderButton";
 import {NoteData} from "../models/Note";
-import {s3Upload} from "../libs/awsLib";
+import {s3Delete, s3Upload} from "../libs/awsLib";
 
 const Notes: React.FC = () => {
   const file = useRef<File|null>(null);
@@ -43,6 +43,12 @@ const Notes: React.FC = () => {
 
   function validateForm() {
     return content.length > 0;
+  }
+
+  // Will delete the current note
+  // The current note id is retrieved via useParams
+  function deleteNote() {
+    return API.del("notes", `/notes/${id}`, {});
   }
 
   function formatFilename(str: string) {
@@ -102,6 +108,17 @@ const Notes: React.FC = () => {
     }
 
     setIsDeleting(true);
+
+    try {
+      await deleteNote();
+      if (note.attachment) {
+        await s3Delete(note.attachment);
+      }
+      history.push("/");
+    } catch (e) {
+      alert(e);
+      setIsDeleting(false);
+    }
   }
 
   return (
