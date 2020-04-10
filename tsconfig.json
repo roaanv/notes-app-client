@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2017",
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "es2017"
     ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -18,9 +18,17 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "inlineSourceMap": true
+    "inlineSourceMap": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./@types"
+    ]
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./@types"
   ]
 }

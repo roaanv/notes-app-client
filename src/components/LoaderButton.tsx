@@ -1,5 +1,8 @@
 import React from "react";
 import {Button, ButtonProps} from "react-bootstrap";
+// import Button from "react-bootstrap/Button";
+// import ButtonProps from "react-bootstrap/Button";
+
 import "./LoaderButton.css";
 import {ClipLoader} from "react-spinners";
 

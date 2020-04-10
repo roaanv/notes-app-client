@@ -6,7 +6,7 @@ import "./NewNote.css";
 import {RouteComponentProps} from "react-router-dom";
 import bsCustomFileInput from 'bs-custom-file-input'
 import { API } from "aws-amplify";
-import {Note} from "../models/Note";
+import {NoteData} from "../models/Note";
 import {s3Upload} from "../libs/awsLib";
 
 interface NewNoteProps extends RouteComponentProps {
@@ -56,7 +56,7 @@ const NewNote:React.FC<NewNoteProps> = (props) => {
     }
   }
 
-  function createNote(note:Note) {
+  function createNote(note:NoteData) {
     // As per amplify configuration in index.tsx
     return API.post("notes", "/notes", {
       body: note
