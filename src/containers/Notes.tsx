@@ -6,6 +6,7 @@ import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import config from "../config";
 import LoaderButton from "../components/LoaderButton";
 import {NoteData} from "../models/Note";
+import {s3Upload} from "../libs/awsLib";
 
 const Notes: React.FC = () => {
   const file = useRef<File|null>(null);
@@ -52,6 +53,12 @@ const Notes: React.FC = () => {
     file.current = (event.target as any).files[0];
   }
 
+  function saveNote(note: NoteData) {
+    return API.put("notes", `/notes/${id}`, {
+      body: note
+    });
+  }
+
   async function handleSubmit(event: FormEvent) {
     let attachment;
 
@@ -66,6 +73,21 @@ const Notes: React.FC = () => {
     }
 
     setIsLoading(true);
+
+    try {
+      if (file.current) {
+        attachment = await s3Upload(file.current);
+      }
+
+      await saveNote({
+        content,
+        attachment: attachment || note.attachment
+      });
+      history.push("/");
+    } catch (e) {
+      alert(e);
+      setIsLoading(false);
+    }
   }
 
   async function handleDelete(event: FormEvent) {
