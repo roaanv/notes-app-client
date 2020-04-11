@@ -7,13 +7,15 @@ import {RouteComponentProps } from "react-router-dom";
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
 import {useFormFields} from "../libs/hooksLib";
+import {useAppContext} from "../libs/contextLib";
 
 // TODO: Need to change the "any" types to strong types
 interface LoginProps extends RouteComponentProps {
-  userHasAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
 
 const Login: React.FC<LoginProps> = (props) => {
+  const { userHasAuthenticated } = useAppContext();
+
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -30,9 +32,9 @@ const Login: React.FC<LoginProps> = (props) => {
 
     try {
       await Auth.signIn(fields.email, fields.password);
-      props.userHasAuthenticated(true);
-      // Redirect to home screen after login
-      props.history.push("/");
+      userHasAuthenticated(true);
+      // Redirecting to the home page is handled via th UnauthenticatedRoute component
+      // props.history.push("/");
     } catch (e) {
       alert(e.message);
     }

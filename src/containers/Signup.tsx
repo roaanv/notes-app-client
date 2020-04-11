@@ -9,13 +9,15 @@ import {Auth} from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Signup.css";
-import {RouteComponentProps} from "react-router-dom";
+import {RouteComponentProps, useHistory} from "react-router-dom";
+import {useAppContext} from "../libs/contextLib";
 
 interface SignUpProps extends RouteComponentProps {
-  userHasAuthenticated: Dispatch<SetStateAction<boolean>>;
 }
 
 const Signup:React.FC<SignUpProps> = (props) => {
+  const { userHasAuthenticated } = useAppContext();
+
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -24,6 +26,7 @@ const Signup:React.FC<SignUpProps> = (props) => {
   });
   const [newUser, setNewUser] = useState<any|null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
   function validateForm() {
     return (
@@ -61,8 +64,8 @@ const Signup:React.FC<SignUpProps> = (props) => {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
 
-      props.userHasAuthenticated(true);
-      props.history.push("/");
+      userHasAuthenticated(true);
+      history.push("/");
     } catch (e) {
       alert(e.message);
       setIsLoading(false);

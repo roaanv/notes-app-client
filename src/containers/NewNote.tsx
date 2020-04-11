@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormFile } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewNote.css";
-import {RouteComponentProps} from "react-router-dom";
+import {RouteComponentProps, useHistory} from "react-router-dom";
 import bsCustomFileInput from 'bs-custom-file-input'
 import { API } from "aws-amplify";
 import {NoteData} from "../models/Note";
@@ -16,6 +16,8 @@ const NewNote:React.FC<NewNoteProps> = (props) => {
   const file = useRef<null|File>(null);
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
+
   useEffect(() => {
     bsCustomFileInput.init();
   }, []);
@@ -49,7 +51,7 @@ const NewNote:React.FC<NewNoteProps> = (props) => {
         : null;
 
       await createNote({ content, attachment });
-      props.history.push("/");
+      history.push("/");
     } catch (e) {
       alert(e);
       setIsLoading(false);

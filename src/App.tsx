@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { withRouter, Link, RouteComponentProps } from "react-router-dom";
+import {withRouter, Link, RouteComponentProps, useHistory} from "react-router-dom";
 import {Nav, Navbar} from "react-bootstrap";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
+import {AppContext} from "./libs/contextLib";
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
 import "./App.css";
@@ -11,6 +12,8 @@ import "./App.css";
 const App: React.FC<RouteComponentProps> = (props) => {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
+  const history = useHistory();
+
   // deps is an empty list, then it will only fire the
   // method on first load
   useEffect(() => {
@@ -35,7 +38,7 @@ const App: React.FC<RouteComponentProps> = (props) => {
     userHasAuthenticated(false);
 
     // Redirect to login page after logout
-    props.history.push("/login");
+    history.push("/login");
   }
 
   return (
@@ -72,7 +75,11 @@ const App: React.FC<RouteComponentProps> = (props) => {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        < Routes appProps={{isAuthenticated, userHasAuthenticated}}/>
+        {/*This defines the context object (or dictionary). This dictionary should*/}
+        {/*contain all the values that will be set/used in the application*/}
+        <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+          < Routes appProps={{isAuthenticated, userHasAuthenticated}}/>
+        </AppContext.Provider>
       </div>
       }
     </>
