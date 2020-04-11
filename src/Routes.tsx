@@ -7,6 +7,7 @@ import AppliedRoute from "./components/AppliedRoute";
 import Signup from "./containers/Signup";
 import NewNote from "./containers/NewNote";
 import Notes from "./containers/Notes";
+import Settings from "./containers/Settings";
 
 function Routes({appProps}:any) {
   return (
@@ -18,6 +19,10 @@ function Routes({appProps}:any) {
       <Route exact path="/notes/:id">
         <Notes />
       </Route>
+      <Route exact path="/settings">
+        <Settings />
+      </Route>
+
 
       <Route component={NotFound} />
     </Switch>

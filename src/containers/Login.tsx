@@ -6,7 +6,7 @@ import {RouteComponentProps } from "react-router-dom";
 
 import "./Login.css";
 import LoaderButton from "../components/LoaderButton";
-import {useFormFields} from "../libs/hooksLibs";
+import {useFormFields} from "../libs/hooksLib";
 
 // TODO: Need to change the "any" types to strong types
 interface LoginProps extends RouteComponentProps {

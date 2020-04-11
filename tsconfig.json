@@ -21,14 +21,16 @@
     "inlineSourceMap": true,
     "typeRoots": [
       "./node_modules/@types",
-      "./@types"
-    ]
+      "./types"
+    ],
+    "noImplicitAny": true
   },
   "include": [
     "src"
   ],
   "exclude": [
     "./node_modules",
-    "./@types"
-  ]
+    "./types"
+  ],
+  "files": ["types/global.d.ts"]
 }

@@ -7,7 +7,7 @@ import {
 } from "react-bootstrap";
 import {Auth} from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
-import { useFormFields } from "../libs/hooksLibs";
+import { useFormFields } from "../libs/hooksLib";
 import "./Signup.css";
 import {RouteComponentProps} from "react-router-dom";
 

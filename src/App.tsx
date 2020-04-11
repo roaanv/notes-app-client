@@ -52,7 +52,14 @@ const App: React.FC<RouteComponentProps> = (props) => {
               {/*LinkContainer makes it so that it */}
               {/*doesn't do a page redirect*/}
               {isAuthenticated
-                ? <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                ? (
+                  <>
+                    <LinkContainer to="/settings">
+                      <Nav.Link>Settings</Nav.Link>
+                    </LinkContainer>
+                    <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                  </>
+                )
                 : <>
                   <LinkContainer to="/signup">
                     <Nav.Link>Signup</Nav.Link>
