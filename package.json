@@ -51,5 +51,8 @@
     "@types/rewire": "^2.5.28",
     "rewire": "^5.0.0",
     "ts-jest": "^25.3.1"
+  },
+  "engines": {
+    "node": ">= v12.15.0"
   }
 }
