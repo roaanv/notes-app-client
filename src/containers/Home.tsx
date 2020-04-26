@@ -34,8 +34,7 @@ const Home:React.FC = (props:any) => {
   }
 
   function renderNotesList(notes:any): any[] {
-    return [].concat(notes).map((note:Note, i:number) =>
-      i !== 0 ? (
+    const notesToRender = [renderAddButton()].concat(notes).map((note:Note, i:number) =>
         <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>
           {/*<ListGroupItem header={note.content.trim().split("\n")[0]}>*/}
           <ListGroupItem>
@@ -43,15 +42,19 @@ const Home:React.FC = (props:any) => {
             {note.content}
           </ListGroupItem>
         </LinkContainer>
-      ) : (
-        <LinkContainer key="new" to="/notes/new">
-          <ListGroupItem>
-            <h4>
-              <b>{BIG_PLUS_SIGN}</b> Create a new note
-            </h4>
-          </ListGroupItem>
-        </LinkContainer>
-      )
+    );
+    return [renderAddButton()].concat(notesToRender);
+  }
+
+  function renderAddButton(): any {
+    return (
+    <LinkContainer key="new" to="/notes/new">
+      <ListGroupItem>
+        <h4>
+          <b>{BIG_PLUS_SIGN}</b> Create a new note
+        </h4>
+      </ListGroupItem>
+    </LinkContainer>
     );
   }
 
